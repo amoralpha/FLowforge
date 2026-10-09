@@ -1,0 +1,103 @@
+# Byte-order marks
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+*.vcxproj
+*.vcxproj.filters
+*.userprefs
+
+# CMake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+# Build directories
+build/
+build-*/
+out/
+cmake-build-*/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Test coverage
+coverage/
+*.gcno
+*.gcda
+*.gcov
+coverage.xml
+*.lcov
+
+# Benchmark results
+benchmark_results/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Secrets and credentials (NEVER commit these)
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.local
+secrets/
+credentials/
+
+# Submodules
+third_party/*/
+!third_party/README.md
+
+# Documentation build
+docs/api/
+# Local AI tool configuration
+.kilo/

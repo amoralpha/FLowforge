@@ -1,0 +1,68 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Development Build",
+      "description": "Debug build with sanitizers and full warnings",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/dev",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "FLOWFORGE_BUILD_TESTS": "ON",
+        "FLOWFORGE_BUILD_BENCHMARKS": "ON",
+        "FLOWFORGE_BUILD_EXAMPLES": "ON",
+        "FLOWFORGE_BUILD_CLI": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release Build",
+      "description": "Optimized release build with LTO",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "FLOWFORGE_BUILD_TESTS": "OFF",
+        "FLOWFORGE_BUILD_BENCHMARKS": "OFF",
+        "FLOWFORGE_BUILD_EXAMPLES": "OFF",
+        "FLOWFORGE_BUILD_CLI": "ON"
+      }
+    },
+    {
+      "name": "relwithdebinfo",
+      "displayName": "Release with Debug Info",
+      "description": "Optimized build with debug symbols for profiling",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/relwithdebinfo",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "FLOWFORGE_BUILD_TESTS": "ON",
+        "FLOWFORGE_BUILD_BENCHMARKS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "dev",
+      "configurePreset": "dev"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "relwithdebinfo",
+      "configurePreset": "relwithdebinfo"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "dev",
+      "configurePreset": "dev",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}
