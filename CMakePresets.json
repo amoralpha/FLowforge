@@ -4,7 +4,7 @@
     {
       "name": "dev",
       "displayName": "Development Build",
-      "description": "Debug build with sanitizers and full warnings",
+      "description": "Debug build with warnings; sanitizers are configured separately",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/dev",
       "cacheVariables": {
@@ -12,13 +12,35 @@
         "FLOWFORGE_BUILD_TESTS": "ON",
         "FLOWFORGE_BUILD_BENCHMARKS": "ON",
         "FLOWFORGE_BUILD_EXAMPLES": "ON",
-        "FLOWFORGE_BUILD_CLI": "ON"
+        "FLOWFORGE_BUILD_CLI": "OFF"
+      }
+    },
+    {
+      "name": "asan",
+      "displayName": "ASan + UBSan (Linux)",
+      "description": "Debug build with AddressSanitizer and fail-fast UndefinedBehaviorSanitizer",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/asan",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer -g",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "FLOWFORGE_BUILD_TESTS": "ON",
+        "FLOWFORGE_BUILD_BENCHMARKS": "OFF",
+        "FLOWFORGE_BUILD_EXAMPLES": "OFF",
+        "FLOWFORGE_BUILD_CLI": "OFF"
       }
     },
     {
       "name": "release",
       "displayName": "Release Build",
-      "description": "Optimized release build with LTO",
+      "description": "Optimized release build",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
@@ -26,7 +48,7 @@
         "FLOWFORGE_BUILD_TESTS": "OFF",
         "FLOWFORGE_BUILD_BENCHMARKS": "OFF",
         "FLOWFORGE_BUILD_EXAMPLES": "OFF",
-        "FLOWFORGE_BUILD_CLI": "ON"
+        "FLOWFORGE_BUILD_CLI": "OFF"
       }
     },
     {
@@ -38,7 +60,9 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "FLOWFORGE_BUILD_TESTS": "ON",
-        "FLOWFORGE_BUILD_BENCHMARKS": "ON"
+        "FLOWFORGE_BUILD_BENCHMARKS": "ON",
+        "FLOWFORGE_BUILD_EXAMPLES": "ON",
+        "FLOWFORGE_BUILD_CLI": "OFF"
       }
     }
   ],
@@ -46,6 +70,10 @@
     {
       "name": "dev",
       "configurePreset": "dev"
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan"
     },
     {
       "name": "release",
@@ -60,6 +88,24 @@
     {
       "name": "dev",
       "configurePreset": "dev",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1",
+        "UBSAN_OPTIONS": "halt_on_error=1"
+      },
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "relwithdebinfo",
+      "configurePreset": "relwithdebinfo",
       "output": {
         "outputOnFailure": true
       }

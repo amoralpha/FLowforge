@@ -22,21 +22,10 @@ jobs:
           sudo apt-get install -y g++ cmake ninja-build
 
       - name: Configure sanitizer build
-        run: |
-          cmake -S . -B build-ci -G Ninja \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_CXX_COMPILER=g++ \
-            "-DCMAKE_CXX_FLAGS=-fsanitize=address,undefined -fno-omit-frame-pointer -g" \
-            "-DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address,undefined" \
-            -DFLOWFORGE_BUILD_TESTS=ON \
-            -DFLOWFORGE_BUILD_BENCHMARKS=OFF \
-            -DFLOWFORGE_BUILD_EXAMPLES=OFF \
-            -DFLOWFORGE_BUILD_CLI=OFF
+        run: cmake --preset asan
 
       - name: Build FlowForge
-        run: cmake --build build-ci --parallel 2
+        run: cmake --build --preset asan --parallel 2
 
       - name: Run sanitizer tests
-        run: ctest --test-dir build-ci --output-on-failure
-        env:
-          ASAN_OPTIONS: detect_leaks=1
+        run: ctest --preset asan
